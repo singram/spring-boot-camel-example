@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ import java.util.Map;
 @Slf4j
 public class ZipCodes {
 
-  private Map<Integer, ZipCode> zipCodes = new HashMap<Integer, ZipCode>();
+  private Map<Integer, ZipCode> zipCodes = Collections.synchronizedMap(new HashMap<Integer, ZipCode>());
 
   ZipCodes() {
     String csvFile = "us_postal_codes.csv";
@@ -41,7 +42,7 @@ public class ZipCodes {
   }
 
   public boolean isValid(int zipCode) {
-    return zipCodes.containsKey(zipCodes);
+    return zipCodes.containsKey(new Integer(zipCode));
   }
 
   public boolean isWithinState(int zipCode, String stateAbr) {
