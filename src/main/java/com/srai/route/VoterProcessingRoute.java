@@ -7,8 +7,10 @@ import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Calendar;
+
 @Component
-public class VoterRoute extends RouteBuilder {
+public class VoterProcessingRoute extends RouteBuilder {
 
   @Autowired
   private ZipCodes zipCodes;
@@ -16,6 +18,7 @@ public class VoterRoute extends RouteBuilder {
   @Override
   public void configure() throws Exception {
     from("seda:batchVoterChannel")
+    .setHeader("batch_timestamp", constant(Calendar.getInstance().getTimeInMillis()))
     .log(LoggingLevel.INFO, "Voter processing STARTED")
     .split(body())
     .to("seda:singleVoterChannel");
@@ -27,15 +30,15 @@ public class VoterRoute extends RouteBuilder {
     from("seda:validVoterZipCodeChannel")
     .choice()
     .when().simple("${body.isRegistered}")
-    .to("seda:registeredVoterChannel")
+    .to("seda:processedVoterChannel")
     .otherwise()
-    .to("seda:unregisteredVoterChannel");
+    .to("seda:unregisteredLocalVoterChannel");
 
-    from("seda:registeredVoterChannel")
-    .to("stream:out");
-
-    from("seda:unregisteredVoterChannel")
-    .to("stream:out");
+    from("seda:unregisteredLocalVoterChannel")
+    .transform().method("externalVoterRegistrationGatewayImpl", "verifyRegistration")
+    .choice()
+    .when().simple("${body.isRegistered}")
+    .to("seda:processedVoterChannel");
 
   }
 }
