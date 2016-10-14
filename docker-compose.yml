@@ -1,0 +1,30 @@
+spring-boot-camel-example:
+  image: spring-boot-camel-example
+  environment:
+    REDIS_HOSTNAME: "redis"
+    REDIS_PORT: "6379"
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - /etc/timezone:/etc/timezone:ro
+  links:
+    - redis
+
+redis:
+  image: redis:3.2.0-alpine
+  ports:
+    - "6379:6379"
+
+probe:
+  image: weaveworks/scope:0.17.1
+  net: "host"
+  pid: "host"
+  privileged: true
+  environment:
+    CHECKPOINT_DISABLE: "true"
+  labels:
+    - "works.weave.role=system"
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock:rw"
+  command:
+    - "--probe.docker"
+    - "true"
