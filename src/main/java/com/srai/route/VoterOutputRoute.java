@@ -19,6 +19,7 @@ public class VoterOutputRoute extends RouteBuilder {
   @Override
   public void configure() throws Exception {
     from("seda:processedVoterChannel")
+    .routeId("VoteResultProcessor")
     .multicast()
     .parallelProcessing()
 

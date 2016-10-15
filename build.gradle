@@ -28,13 +28,16 @@ repositories {
 }
 
 dependencies {
-	compile('org.apache.camel:camel-spring-boot-starter:2.18.0')
+	compile('com.opencsv:opencsv:3.8')
+	compile('io.dropwizard.metrics:metrics-core')
+	compile('io.dropwizard.metrics:metrics-graphite')
 	compile('org.apache.camel:camel-metrics:2.18.0')
+	compile('org.apache.camel:camel-spring-boot-starter:2.18.0')
 	compile('org.apache.camel:camel-spring-redis:2.18.0')
 	compile('org.apache.camel:camel-stream:2.18.0')
 	compile('org.apache.camel:camel-websocket:2.18.0')
-	compile('com.opencsv:opencsv:3.8')
 	compile('org.projectlombok:lombok')
+	compile('org.springframework.boot:spring-boot-actuator')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 

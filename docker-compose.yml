@@ -8,11 +8,21 @@ spring-boot-camel-example:
     - /etc/timezone:/etc/timezone:ro
   links:
     - redis
+    - grafana
 
 redis:
   image: redis:3.2.0-alpine
   ports:
     - "6379:6379"
+
+grafana:
+  image: kamon/grafana_graphite
+  ports:
+    - 80:80
+    - 81:81
+    - 8125:8125/udp
+    - 8126:8126
+    - 2003:2003
 
 probe:
   image: weaveworks/scope:0.17.1
