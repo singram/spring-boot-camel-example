@@ -1,6 +1,7 @@
 spring-boot-camel-example:
   image: spring-boot-camel-example
   environment:
+    GRAPHITE_HOSTNAME: "grafana"
     REDIS_HOSTNAME: "redis"
     REDIS_PORT: "6379"
   volumes:
@@ -14,6 +15,17 @@ redis:
   image: redis:3.2.0-alpine
   ports:
     - "6379:6379"
+
+hawtio:
+  build: ./
+  dockerfile: Dockerfile-hawtio
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - /etc/timezone:/etc/timezone:ro
+  links:
+    - spring-boot-camel-example
+  ports:
+    - "8090:8090"
 
 grafana:
   image: kamon/grafana_graphite

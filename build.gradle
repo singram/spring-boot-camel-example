@@ -38,6 +38,12 @@ dependencies {
 	compile('org.apache.camel:camel-websocket:2.18.0')
 	compile('org.projectlombok:lombok')
 	compile('org.springframework.boot:spring-boot-actuator')
+	compile('org.springframework.boot:spring-boot-starter-jetty')
+	compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: 'spring-boot-starter-tomcat'
+    }
+    compile('org.jolokia:jolokia-core')
+    
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
