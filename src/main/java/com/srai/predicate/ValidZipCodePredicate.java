@@ -1,7 +1,7 @@
 package com.srai.predicate;
 
 import com.srai.model.Voter;
-import com.srai.model.ZipCodes;
+import com.srai.service.ZipCodes;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
 import org.apache.camel.Predicate;

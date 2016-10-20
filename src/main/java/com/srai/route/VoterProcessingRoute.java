@@ -1,7 +1,7 @@
 package com.srai.route;
 
-import com.srai.model.ZipCodes;
 import com.srai.predicate.ValidZipCodePredicate;
+import com.srai.service.ZipCodes;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,22 +27,24 @@ public class VoterProcessingRoute extends RouteBuilder {
     from("seda:singleVoterChannel")
     .routeId("VoterZipcodeValidator")
     .filter(new ValidZipCodePredicate(zipCodes))
-    .to("seda:validVoterZipCodeChannel");
+    .to("seda:votersWithValidZipCodeChannel");
 
-    from("seda:validVoterZipCodeChannel")
-    .routeId("VoterIsRegisteredSplit")
+    from("seda:votersWithValidZipCodeChannel")
+    .routeId("VoterRegistrationSpliter")
     .choice()
     .when().simple("${body.isRegistered}")
-    .to("seda:processedVoterChannel")
+    .to("seda:registrationValidationChannel")
     .otherwise()
-    .to("seda:unregisteredLocalVoterChannel");
+    .to("seda:unregisteredVoterChannel");
 
-    from("seda:unregisteredLocalVoterChannel")
-    .routeId("VoterRegistrationCheck")
+    from("seda:registrationValidationChannel")
+    .routeId("VoterRegistrationValidation")
     .transform().method("externalVoterRegistrationGatewayImpl", "verifyRegistration")
     .choice()
     .when().simple("${body.isRegistered}")
-    .to("seda:processedVoterChannel");
+    .to("seda:registeredVoterChannel")
+    .otherwise()
+    .to("seda:unregisteredVoterChannel");
 
   }
 }

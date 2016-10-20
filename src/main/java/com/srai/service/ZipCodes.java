@@ -1,7 +1,8 @@
-package com.srai.model;
+package com.srai.service;
 
 import com.opencsv.CSVParser;
 import com.opencsv.CSVReader;
+import com.srai.model.ZipCode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;

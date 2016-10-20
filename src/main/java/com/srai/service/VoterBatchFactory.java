@@ -15,7 +15,7 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class VoterBatchGenerator {
+public class VoterBatchFactory {
 
   @Setter
   @Value("${voter.batch.size:10}")
@@ -29,13 +29,13 @@ public class VoterBatchGenerator {
 
   @Scheduled(fixedRate = 4000)
   public void scheduleVoterHandling() {
-    Collection<Voter> voters = generateVoters(batchSize);
+    Collection<Voter> voters = nextVoterBatch(batchSize);
     log.info("===========> Sending " + voters.size() + " voters to the system");
     voters.forEach(voter -> log.debug(voter.toString()));
     voterGateway.collectVoters(voters);
   }
 
-  private Collection<Voter> generateVoters(int limit) {
+  private Collection<Voter> nextVoterBatch(int limit) {
     List<Voter> voters = new ArrayList<>();
     for (int i = 0; i < limit; i++) {
       voters.add(voterFactory.nextVoter());

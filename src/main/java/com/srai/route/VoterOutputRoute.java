@@ -1,5 +1,7 @@
 package com.srai.route;
 
+import com.srai.strategy.ArrayListAggregationStrategy;
+import com.srai.strategy.VoteCountAggregationStrategy;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.redis.RedisConstants;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +20,7 @@ public class VoterOutputRoute extends RouteBuilder {
 
   @Override
   public void configure() throws Exception {
-    from("seda:processedVoterChannel")
+    from("seda:registeredVoterChannel")
     .routeId("VoteResultProcessor")
     .multicast()
     .parallelProcessing()

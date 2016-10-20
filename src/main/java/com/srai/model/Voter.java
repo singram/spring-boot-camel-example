@@ -1,11 +1,13 @@
 package com.srai.model;
 
 import lombok.Data;
+import lombok.NonNull;
 
 @Data
 public class Voter {
   private final int age;
-  private final boolean registered;
+  @NonNull
+  private boolean registered;
   private final String candidate;
   private final int zipCode;
   private int count=1;

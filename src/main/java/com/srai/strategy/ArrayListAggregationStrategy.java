@@ -1,4 +1,4 @@
-package com.srai.route;
+package com.srai.strategy;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.AggregationStrategy;

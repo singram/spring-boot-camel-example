@@ -12,7 +12,7 @@ public class ZipCode {
   private float latitude;
   private float longitude;
 
-  ZipCode(String[] line) {
+  public ZipCode(String[] line) {
     code = new Integer(line[0]);
     name = line[1];
     state = line[2];
