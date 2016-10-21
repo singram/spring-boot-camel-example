@@ -1,9 +1,9 @@
 spring-boot-camel-example:
   image: spring-boot-camel-example
   environment:
-    GRAPHITE_HOSTNAME: "grafana"
-    REDIS_HOSTNAME: "redis"
-    REDIS_PORT: "6379"
+    GRAPHITE_HOST: "grafana"
+    SPRING_REDIS_HOST: "redis"
+    SPRING_REDIS_PORT: "6379"
     METRICS_REPORTING_ENABLED: "true"
   volumes:
     - /etc/localtime:/etc/localtime:ro
@@ -17,6 +17,7 @@ spring-boot-camel-example:
 
 redis:
   image: redis:3.2.0-alpine
+  hostname: redis
   ports:
     - "6379:6379"
 
@@ -33,6 +34,7 @@ hawtio:
 
 grafana:
   image: kamon/grafana_graphite
+  hostname: grafana
   ports:
     - 80:80
     - 81:81
@@ -41,7 +43,7 @@ grafana:
     - 2003:2003
 
 probe:
-  image: weaveworks/scope:0.17.1
+  image: weaveworks/scope:1.6.3
   net: "host"
   pid: "host"
   privileged: true
@@ -54,3 +56,5 @@ probe:
   command:
     - "--probe.docker"
     - "true"
+  ports:
+    - 4040:4040

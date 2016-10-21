@@ -1,3 +1,23 @@
+# Pre requsities
+
+Docker
+Java 8
+
+./gradlew eclipse:eclipse
+./gradlew dockerBuild
+docker-compose up
+
+http://localhost:8090/hawtio/
+- Connect to 'spring-boot-camel-example'
+http://localhost:8080/
+http://localhost
+http://localhost:4040/
+
+to run locally
+
+env SPRING_CONFIG_LOCATION=file:/home/singram/personal/spring-boot-camel-example/application.properties ./gradlew bootRun
+
+
 # spring-boot-camel-example
 Example voter application using springboot and camel
 

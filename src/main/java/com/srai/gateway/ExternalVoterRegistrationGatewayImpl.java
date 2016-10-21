@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
+//WIP
 @Component
 public class ExternalVoterRegistrationGatewayImpl implements ExternalVoterRegistrationGateway {
 

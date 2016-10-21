@@ -40,7 +40,7 @@ public class VoterOutputRoute extends RouteBuilder {
     .setHeader(RedisConstants.COMMAND, simple("INCRBY"))
     .setHeader(RedisConstants.VALUE, simple("${body.count}"))
     .setHeader(RedisConstants.KEY, simple("${body.candidate}"))
-    .to("spring-redis://{{redis.hostname}}:{{redis.port}}?serializer=#stringSerializer")
+    .to("spring-redis://{{spring.redis.host}}:{{spring.redis.port}}?serializer=#stringSerializer")
     .end()
 
     // Aggregate votes according to original batch.  Split for simple stream processing.

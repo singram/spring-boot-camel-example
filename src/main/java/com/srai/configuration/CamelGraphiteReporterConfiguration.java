@@ -25,7 +25,7 @@ public class CamelGraphiteReporterConfiguration {
   @Autowired
   private MetricRegistry metricRegistry;
 
-  @Value("${graphite.hostname}")
+  @Value("${graphite.host}")
   private String graphiteHostname;
 
   @Value("${graphite.port}")
