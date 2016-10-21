@@ -11,7 +11,6 @@ import org.apache.camel.component.metrics.routepolicy.MetricsRoutePolicyFactory;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.net.InetSocketAddress;
@@ -30,7 +29,7 @@ public class CamelGraphiteReporterConfiguration {
   @Value("${graphite.port}")
   private int graphitePort;
 
-  @Bean(destroyMethod = "stop")
+  //  @Bean(destroyMethod = "stop")
   public GraphiteReporter graphiteReporter() {
     final GraphiteSender graphite = new Graphite(new InetSocketAddress(graphiteHostname, graphitePort));
     final GraphiteReporter reporter = GraphiteReporter
@@ -44,7 +43,7 @@ public class CamelGraphiteReporterConfiguration {
     return reporter;
   }
 
-  @Bean
+  //  @Bean
   CamelContextConfiguration contextConfiguration() {
     return new CamelContextConfiguration() {
       @Override

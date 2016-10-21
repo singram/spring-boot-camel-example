@@ -10,6 +10,9 @@ spring-boot-camel-example:
   links:
     - redis
     - grafana
+  ports:
+    - "8080:8080"
+    - "9292:9292"
 
 redis:
   image: redis:3.2.0-alpine
