@@ -11,6 +11,7 @@ import org.apache.camel.component.metrics.routepolicy.MetricsRoutePolicyFactory;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -31,6 +32,7 @@ public class CamelGraphiteReporterConfiguration {
   private int graphitePort;
 
   @Bean(destroyMethod = "stop")
+  @ConditionalOnExpression("${metrics.reporting.enabled:true}")
   public GraphiteReporter graphiteReporter() {
     final GraphiteSender graphite = new Graphite(new InetSocketAddress(graphiteHostname, graphitePort));
     final GraphiteReporter reporter = GraphiteReporter
@@ -45,6 +47,7 @@ public class CamelGraphiteReporterConfiguration {
   }
 
   @Bean
+  @ConditionalOnExpression("${metrics.reporting.enabled:true}")
   CamelContextConfiguration contextConfiguration() {
     return new CamelContextConfiguration() {
       @Override

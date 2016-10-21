@@ -18,7 +18,7 @@ public class ValidZipCodePredicate implements Predicate {
   @Override
   public boolean matches(Exchange exchange) {
     Voter voter = exchange.getIn().getBody(Voter.class);
-    boolean validZipcode = zipCodes.isValid(voter.getZipCode());
+    boolean validZipcode = voter.getZipCode() != null && zipCodes.isValid(voter.getZipCode().getCode());
     if (validZipcode) {
       log.info(voter.getZipCode()+" is valid");
     }

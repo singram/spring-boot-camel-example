@@ -51,5 +51,8 @@ public class ZipCodes {
     return (zip == null ? false : zip.isWithinState(stateAbr));
   }
 
+  public ZipCode get(int zipCode) {
+    return zipCodes.get(zipCode);
+  }
 }
 

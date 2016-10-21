@@ -4,6 +4,7 @@ import com.srai.strategy.ArrayListAggregationStrategy;
 import com.srai.strategy.VoteCountAggregationStrategy;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.redis.RedisConstants;
+import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -26,7 +27,12 @@ public class VoterOutputRoute extends RouteBuilder {
     .parallelProcessing()
 
     // Output registered voters to websocket
-    .to("websocket://localhost:9292/echo?sendToAll=true")
+    .pipeline()
+    .marshal().json(JsonLibrary.Jackson)
+    .convertBodyTo(String.class)  // Avoids string serialization issues in websocket component.
+    .to("websocket://localhost:9292/votes?sendToAll=true")
+    //.to("ahc-ws://localhost:8080/votes?sendToAll=true")
+    .end()
 
     // Aggregate votes by candidate to REDIS
     .pipeline()

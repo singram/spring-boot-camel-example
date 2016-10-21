@@ -4,12 +4,16 @@ spring-boot-camel-example:
     GRAPHITE_HOSTNAME: "grafana"
     REDIS_HOSTNAME: "redis"
     REDIS_PORT: "6379"
+    METRICS_REPORTING_ENABLED: "true"
   volumes:
     - /etc/localtime:/etc/localtime:ro
     - /etc/timezone:/etc/timezone:ro
   links:
     - redis
     - grafana
+  ports:
+    - "8080:8080"
+    - "9292:9292"
 
 redis:
   image: redis:3.2.0-alpine
