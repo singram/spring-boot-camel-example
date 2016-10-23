@@ -44,9 +44,7 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: 'spring-boot-starter-tomcat'
     }
-    compile("org.webjars:webjars-locator")
-    compile('org.webjars.bower:socket.io-client:1.4.5')
-    
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 

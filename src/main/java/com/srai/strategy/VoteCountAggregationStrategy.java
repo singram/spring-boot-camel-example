@@ -10,7 +10,7 @@ public class VoteCountAggregationStrategy implements AggregationStrategy {
   public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
     Voter newBody = newExchange.getIn().getBody(Voter.class);
     if (oldExchange == null) {
-      Voter v = new Voter(0, true, newBody.getCandidate(), 1);
+      Voter v = new Voter(0, true, newBody.getCandidate(), null);
       newExchange.getIn().setBody(v);
       return newExchange;
     } else {

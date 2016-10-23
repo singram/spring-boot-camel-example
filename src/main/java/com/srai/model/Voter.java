@@ -9,6 +9,6 @@ public class Voter {
   @NonNull
   private boolean registered;
   private final String candidate;
-  private final int zipCode;
+  private final ZipCode zipCode;
   private int count=1;
 }

@@ -1,13 +1,251 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello WebSocket</title>
-    <script src="http://localhost:8080/webjars/socket.io-client/socket.io.js"></script>
+    <title>Camel WebSocket Example</title>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
     <script src="https://raw.githubusercontent.com/markmarkoh/datamaps/master/dist/datamaps.usa.min.js"></script>
+  </head>
+<body>
+<div id="main-content" class="container">
+  <div id="root"></div>
+</div>
+<div id="container" style="position: relative; width: 600px; height: 400px;"></div>
     <script>
         var wsUri = 'ws://localhost:9292/echo';
+        var voteData = {
+        	  "AZ": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "CO": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "DE": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "FL": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "GA": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "HI": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "ID": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "IL": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "IN": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "IA": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "KS": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "KY": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "LA": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "MD": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "ME": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "MA": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "MN": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "MI": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "MS": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "MO": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "MT": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "NC": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "NE": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "NV": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "NH": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "NJ": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "NY": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "ND": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "NM": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "OH": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "OK": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "OR": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "PA": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "RI": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "SC": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "SD": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "TN": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "TX": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "UT": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "WI": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "VA": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "VT": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "WA": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "WV": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "WY": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "CA": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "CT": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "AK": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "AR": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  },
+        	  "AL": {
+        	      "candidates": {},
+        	      "fillKey": "Neutral"
+        	  }
+        	}
+
+        var map = new Datamap({
+          scope: 'usa', 
+          element: document.getElementById('container'),
+          geographyConfig: {
+            highlightBorderColor: '#bada55',
+            popupTemplate: function(geography, data) {
+              var candidates = Object.keys(data.candidates)
+              var candidate_str = ""
+              for(var c in candidates) {
+                var candidate = candidates[c]
+                candidate_str += "<br> " + candidate + ": " +data.candidates[candidate];
+              }
+              if (candidate_str != "") {
+            	  candidate_str = "<br>Electoral Votes:" + candidate_str;
+              }
+              return '<div class="hoverinfo">' + geography.properties.name + candidate_str;
+            },
+            highlightBorderWidth: 3
+          },
+          fills: {
+            'Heavy Democrat': '#306596',
+            'Democrat': '#667FAF',
+            'Light Democrat': '#A9C0DE',
+            'Heavy Republican': '#CC4731',
+            'Republican': '#CA5E5B',
+            'Light Republican': '#EAA9A8',
+            'Neutral': '#EDDC4E'
+          }, 
+          data: voteData
+        });
 
         function initializeConnection() {
         websocket = new WebSocket(wsUri);
@@ -26,26 +264,41 @@
         }
 
         function onMessage(evt) {
-          var foo = JSON.parse(evt.data)
-          console.log('MSG: '+ foo.age);
-//          console.log('MSG: '+ evt.data);
+          var vote = JSON.parse(evt.data)
+          var stateAbr = vote.zipCode.stateAbr
+          voteData[stateAbr]['candidates'][vote.candidate] = (voteData[stateAbr]['candidates'][vote.candidate] ||0 ) + 1
+          voteData[stateAbr]['fillKey'] = calc_fill(voteData[stateAbr]['candidates'])
+          console.log('MSG: '+ vote.zipCode.stateAbr + " "+vote.candidate+" x "+voteData[stateAbr]['candidates'][vote.candidate]);
+          map.updateChoropleth(voteData, {reset: true})
         }
 
         function onError(evt) {
           console.log('ERROR '+evt.data);
         }
 
+        
+        var dem_party_weights = [
+            'Light Democrat',
+            'Democrat',
+            'Heavy Democrat'
+            ]
+        var rep_party_weights = [
+            'Light Republican',
+            'Republican',
+            'Heavy Republican'
+          ]
+        function calc_fill(c_data) {
+        	var total = (c_data["Trump"] || 0) + (c_data["Clinton"] || 0)
+        	var diff = (c_data["Trump"] || 0) - (c_data["Clinton"] || 0)
+        	if (total == 0 || diff == 0)
+        	  return 'Neutral';
+        	var party_weights = diff > 0 ? rep_party_weights : dem_party_weights
+        	return party_weights[Math.round(Math.abs(diff/total)*2)]
+        }
+        
         initializeConnection();
+        map.labels();
+        map.legend();
     </script>
-  </head>
-<body>
-<div id="main-content" class="container">
-  <div id="root"></div>
-  FOOOOOOOOOOOOOOOOOOOOOOOXSXXX
-</div>
-<div id="container" style="position: relative; width: 500px; height: 300px;"></div>
-<script>
-    var map = new Datamap({scope: 'usa', element: document.getElementById('container')});
-</script>
 </body>
 </html>

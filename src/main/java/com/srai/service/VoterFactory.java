@@ -1,12 +1,17 @@
 package com.srai.service;
 
 import com.srai.model.Voter;
+import com.srai.model.ZipCode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
 @Component
 public class VoterFactory {
+
+  @Autowired
+  private ZipCodes zipCodes;
 
   private Random rand = new Random();
 
@@ -26,8 +31,8 @@ public class VoterFactory {
     return rand.nextBoolean() ? "Trump" : "Clinton";
   }
 
-  private int zipCode() {
-    return rand.nextInt(99960);
+  private ZipCode zipCode() {
+    return zipCodes.get(rand.nextInt(99960));
   }
 
 }
