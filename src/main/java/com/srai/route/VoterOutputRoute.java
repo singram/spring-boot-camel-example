@@ -30,7 +30,7 @@ public class VoterOutputRoute extends RouteBuilder {
     .pipeline()
     .marshal().json(JsonLibrary.Jackson)
     .convertBodyTo(String.class)  // Avoids string serialization issues in websocket component.
-    .to("websocket://localhost:9292/echo?sendToAll=true")
+    .to("websocket://localhost:9292/votes?sendToAll=true")
     .end()
 
     // Aggregate votes by candidate to REDIS

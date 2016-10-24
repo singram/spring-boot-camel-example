@@ -12,7 +12,7 @@
 </div>
 <div id="container" style="position: relative; width: 600px; height: 400px;"></div>
     <script>
-        var wsUri = 'ws://localhost:9292/echo';
+        var wsUri = 'ws://localhost:9292/votes';
         var voteData = {
         	  "AZ": {
         	      "candidates": {},
@@ -260,7 +260,7 @@
         }
 
         function onClose(evt) {
-          writeToScreen("DISCONNECTED");
+          console.log("DISCONNECTED");
         }
 
         function onMessage(evt) {
