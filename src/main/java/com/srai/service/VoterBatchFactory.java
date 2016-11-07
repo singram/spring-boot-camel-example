@@ -6,15 +6,16 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Slf4j
-@Component
+@RefreshScope
+@Configuration
 public class VoterBatchFactory {
 
   @Setter
@@ -27,7 +28,6 @@ public class VoterBatchFactory {
   @Autowired
   VoterGatewayImpl voterGateway;
 
-  @Scheduled(fixedRate = 4000)
   public void scheduleVoterHandling() {
     Collection<Voter> voters = nextVoterBatch(batchSize);
     log.info("===========> Sending " + voters.size() + " voters to the system");

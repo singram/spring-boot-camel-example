@@ -1,6 +1,7 @@
 buildscript {
 	ext {
 		springBootVersion = '1.4.1.RELEASE'
+		springCloudVersion = 'Brixton.SR1'
 	}
 	repositories {
 		mavenCentral()
@@ -31,12 +32,12 @@ dependencies {
 	compile('com.opencsv:opencsv:3.8')
 	compile('io.dropwizard.metrics:metrics-core')
 	compile('io.dropwizard.metrics:metrics-graphite')
-	compile('org.apache.camel:camel-jackson:2.18.0')
-	compile('org.apache.camel:camel-metrics:2.18.0')
+	compile('org.apache.camel:camel-jackson-starter:2.18.0')
+	compile('org.apache.camel:camel-metrics-starter:2.18.0')
 	compile('org.apache.camel:camel-spring-boot-starter:2.18.0')
-	compile('org.apache.camel:camel-spring-redis:2.18.0')
-	compile('org.apache.camel:camel-stream:2.18.0')
-	compile('org.apache.camel:camel-websocket:2.18.0')
+	compile('org.apache.camel:camel-spring-redis-starter:2.18.0')
+	compile('org.apache.camel:camel-stream-starter:2.18.0')
+	compile('org.apache.camel:camel-websocket-starter:2.18.0')
     compile('org.jolokia:jolokia-core')
 	compile('org.projectlombok:lombok')
 	compile('org.springframework.boot:spring-boot-actuator')
@@ -44,9 +45,17 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: 'spring-boot-starter-tomcat'
     }
-
+	compile('org.springframework.cloud:spring-cloud-starter-config')
+	
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-starter-parent:${springCloudVersion}"
+    }
+}
+
 
 task buildDocker(type: Docker, dependsOn: build) {
 //  push = true

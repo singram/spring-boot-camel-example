@@ -1,6 +1,9 @@
 # spring-boot-camel-example
 Example voter application using springboot and camel
 
+env SPRING_CONFIG_LOCATION=file:/home/singram/personal/spring-boot-camel-example/application.properties ./gradlew bootRun
+
+
 https://vrtoonjava.wordpress.com/2013/10/20/apache-camel-developing-application-from-the-scratch-part-2-2/
 http://www.davsclaus.com/2014/09/more-metrics-in-apache-camel-214.html
 http://henryk-konsek.blogspot.com/2014/10/using-apache-camel-with-spring-boot.html
