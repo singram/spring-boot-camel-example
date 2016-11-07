@@ -32,7 +32,7 @@ public class CamelGraphiteReporterConfiguration {
   private int graphitePort;
 
   @Bean(destroyMethod = "stop")
-  @ConditionalOnExpression("${metrics.reporting.enabled:true}")
+  @ConditionalOnExpression("${metrics.reporting.enabled:false}")
   public GraphiteReporter graphiteReporter() {
     final GraphiteSender graphite = new Graphite(new InetSocketAddress(graphiteHostname, graphitePort));
     final GraphiteReporter reporter = GraphiteReporter
@@ -47,7 +47,7 @@ public class CamelGraphiteReporterConfiguration {
   }
 
   @Bean
-  @ConditionalOnExpression("${metrics.reporting.enabled:true}")
+  @ConditionalOnExpression("${metrics.reporting.enabled:false}")
   CamelContextConfiguration contextConfiguration() {
     return new CamelContextConfiguration() {
       @Override
